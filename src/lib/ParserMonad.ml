@@ -2,10 +2,10 @@
 
 type 'a parser = string -> ('a * string) list
 
-module ParserMonad : (Monad.S with type 'a m := 'a parser) =
+module M : (Monad.S with type 'a m := 'a parser) =
   Monad.Make(
       struct
-        open ListMonad.L
+        open ListMonad.M
         type 'a m = 'a parser
 
         let return a = fun s -> [(a,s)]
@@ -17,12 +17,9 @@ module ParserMonad : (Monad.S with type 'a m := 'a parser) =
 
       end)
 
-module ParserApplicative : (Applicative.S with type 'a a := 'a parser)
-  = Applicative.FromMonad(ParserMonad)
+module A : (Applicative.S with type 'a a := ParserMonad.m) = Applicative.FromMonad(M)
+module F = Functor.FromApplicative(A)
 
-module ParserFunctor : (Functor.S with type f := ParserApplicative.m)
-  = Functor.FromApplicative(ParserApplicative)
-
-open ParserMonad
-open ParserApplicative
-open ParserFunctor
+open M
+open A
+open F
