@@ -1,0 +1,50 @@
+USE_OCAMLFIND = true
+
+.PHONY: all install clean
+
+.SUBDIRS: src
+
+clean:
+	rm -f *.cmi *.cmo *.cmx *.cmxa *.cma *.annot *.s *.o *.opt \
+	    *.run *.a *.inc
+
+NATIVE_ENABLED = $(OCAMLOPT_EXISTS)
+BYTE_ENABLED = $(not $(OCAMLOPT_EXISTS))
+
+#
+# Various options
+#
+OCAMLFLAGS    += -Wa
+# OCAMLCFLAGS   +=
+# OCAMLOPTFLAGS +=
+# OCAML_LINK_FLAGS +=
+# OCAML_BYTE_LINK_FLAGS +=
+# OCAML_NATIVE_LINK_FLAGS +=
+
+################################################
+# Generated files
+#
+# Workaround for the fact that ocamldep does not pay attention to .mll
+# and .mly files.
+#
+# OCamlGeneratedFiles(parser.ml lexer.ml)
+
+################################################
+# Build an OCaml library
+#
+
+################################################
+# Build an OCaml program
+#
+
+# FILES[] =
+
+#    file2
+
+# PROGRAM =
+# OCAML_LIBS +=
+# OCAML_CLIBS +=
+# OCAML_OTHER_LIBS +=
+# OCAML_LIB_FLAGS +=
+
+# .DEFAULT: $(OCamlProgram $(PROGRAM), $(FILES))

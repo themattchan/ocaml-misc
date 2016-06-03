@@ -1,0 +1,22 @@
+OCAMLOPTFLAGS += -inline 10
+
+# Build the library as a static library.
+# This builds libbug.a on Unix/OSX, or libbug.lib on Win32.
+# Note that the source files are listed _without_ suffix.
+USE_OCAMLFIND = true
+
+LIB = ocaml-typeclass
+
+FILES[] =
+	Monad
+	Applicative
+	Functor
+	ListMonad
+	ParserMonad
+
+.DEFAULT: $(OCamlLibrary $(LIB), $(FILES))
+
+.PHONY: clean
+
+clean:
+	rm -f $(filter-proper-targets $(ls R, .))
